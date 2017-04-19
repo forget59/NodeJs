@@ -1,9 +1,11 @@
 var express = require('express');
+var yargs = require('yargs');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var testimport = require('./testimport');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -44,6 +46,12 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+// testimport.listNote();
+
+// var command = process.argv[2];
+var command = yargs.argv._[0];
+
 /*
 const fs = require('fs');
 fs.appendFile('test.txt', 'Message Test', (err) => {
@@ -52,3 +60,16 @@ fs.appendFile('test.txt', 'Message Test', (err) => {
   }
   console.log('Fichier créé');
 });*/
+
+
+if (command === 'add'){
+    testimport.addNote(yargs.argv._[1],yargs.argv._[2]);
+}else if (command === 'listNote'){
+    testimport.listNote();
+}else if (command === 'readNote'){
+    testimport.readNote("title");
+}else if (command === 'removeNote'){
+    testimport.removeNote("title","body");
+}
+
+    console.log(command);
